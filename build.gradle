@@ -16,11 +16,15 @@ targetCompatibility = 1.8
 
 repositories {
     jcenter()
+    maven { url "https://jitpack.io" }
 }
 
 dependencies {
     implementation 'org.slf4j:slf4j-api:1.7.30'
-    implementation 'com.github.natanbc:native-loader:0.7.0'
+    // M! Changes
+    // https://github.com/Stonedestroyer/native-loader/commit/5378fb370360b985772c0b19418a53493d83700c
+    implementation 'com.github.stonedestroyer:native-loader:red-SNAPSHOT'
+    // implementation 'com.github.natanbc:native-loader:0.7.0'
     compileOnly 'com.sedmelluq:lavaplayer:1.3.66'
     testCompile 'com.sedmelluq:lavaplayer:1.3.66'
     testCompile 'ch.qos.logback:logback-classic:1.2.3'

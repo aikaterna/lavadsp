@@ -20,7 +20,7 @@ import com.github.natanbc.nativeloader.NativeLibLoader;
 import com.github.natanbc.nativeloader.feature.X86Feature;
 
 public class TimescaleNativeLibLoader {
-    private static final NativeLibLoader LOADER = NativeLibLoader.create(TimescaleNativeLibLoader.class, "timescale")
+    private static NativeLibLoader LOADER = NativeLibLoader.create(TimescaleNativeLibLoader.class, "timescale")
             .withFeature(X86Feature.AVX2);
     private static volatile boolean loaded = false;
     private static volatile String soundTouchVersion;
@@ -29,6 +29,12 @@ public class TimescaleNativeLibLoader {
 
     public static void loadTimescaleLibrary() {
         if(loaded) return;
+        // M1 code
+        String osName = System.getProperty("os.name").toLowerCase();
+        String osArch = System.getProperty("os.arch").toLowerCase();
+        if(osName.equals("mac os x") && osArch.equals("aarch64")) {
+            LOADER = NativeLibLoader.create(TimescaleNativeLibLoader.class, "timescale");
+        }
         LOADER.load();
         soundTouchVersion = TimescaleLibrary.soundTouchVersion();
         soundTouchVersionID = TimescaleLibrary.soundTouchVersionID();
